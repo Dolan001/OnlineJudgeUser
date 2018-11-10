@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'profileStyle.css', v=560457354) }}">
+{% endblock %}
+{% block openAcc %}
+    <li>
+        {% if myname %}
+            <div id="proname"><p id="name">{{ myname }}</p></div>
+        {% endif %}
+    </li>
+    <li><a href="{{ url_for('addArticle') }}">Add article</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4" style="margin-top: 20px">
+                                <a href="#">
+                                    <img src="{{ url_for('static', filename = 'pro.jpg') }}"
+                                         style="width:100%;" class="img-circle">
+                                </a>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12 text-center" style="margin-top: 0px">
+                                {% if userDetails %}
+                                    <h4>{{ userDetails[4] }} {{ userDetails[5] }}</h4>
+                                    <p>{{ userDetails[2] }}</p>
+                                {% endif %}
+                                <div class="row">
+                                    <a href="{{ url_for('follow', username=username) }}">
+                                        <button>Follow</button>
+                                    </a>
+                                    <button>Message</button>
+                                </div>
+                                <div class="row">
+                                    <div class="" style="width: 100%; margin-top: 20px">
+                                        <div style="width: 100%; height: 30px; background: darkgray">
+                                            <h4 style="text-align: center; padding-top: 5px; font-weight: bold">My
+                                                Status</h4>
+                                        </div>
+                                        <div style="background: white; width: 100%">
+                                            <div class="table-responsive"
+                                                 style="border-radius: 5px">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Rating</td>
+                                                        <td>20</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Follower</td>
+                                                        <td>105</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-8 col-xs-0"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        {% for post in post %}
+                            <div style="width: 100%; margin-top: 20px" id="pro_posts" class="vl">
+                                <a href="{{ url_for('article', title_id = post[0], article_title = post[2]) }}"
+                                   style="text-decoration: none">
+                                    <div style="" class="proPost">
+                                        <h4 style="color: black; font-weight: bold">{{ post[2] }}</h4>
+                                        <p style="color: black">{{ post[3] }}</p>
+                                    </div>
+                                    <br>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

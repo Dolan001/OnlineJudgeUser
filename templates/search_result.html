@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Forum{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'searchStyle.css', v=876546542) }}">
+{% endblock %}
+{% block openAcc %}
+    <li>
+        {% if session_user_name %}
+            <div id="proname"><p id="name">{{ session_user_name }}</p></div>
+        {% endif %}
+    </li>
+    <li><a href="{{ url_for('addArticle') }}">Add article</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <h1>Search Result</h1>
+                {% for i in data %}
+                    <div class="result_div">
+                        <a href="{{ url_for('article', title_id = i[0], article_title = i[2]) }}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2><b>{{ i[2] }}</b></h2>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{{ i[3] }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+.vl {
+    border-left: 5px solid gray;
+    height: 100%;
+}
+#proname{
+    background: #eaeaea;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+#name{
+    padding: 5px;
+}

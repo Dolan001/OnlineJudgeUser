@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block title %}Forum{% endblock %}
+{% block openAcc %}
+    <li>
+        {% if session_user_name %}
+            <div id="proname"><p id="name">{{ session_user_name }}</p></div>
+        {% endif %}
+    </li>
+    <li><a href="{{ url_for('addArticle') }}">Add article</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                {% for data in data %}
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" id="main_content">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="article_title">
+                                    <h2 class="article_title"><a
+                                            href="{{ url_for('article', article_title = data[2], title_id=data[0]) }}">{{ data[2] }}</a>
+                                    </h2>
+                                    <h5 class="article_title">By <a
+                                            href="{{ url_for('profile', username=data[1]) }}"><b>{{ data[1] }}</b></a>, {{ data[4] }}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="article_details">
+                                    <div id="article"><h4 id="div_article">{{ data[3] }}</h4></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="article_react_bg">
+                                    <div class="row" id="article_react">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <form>
+                                                <p style="margin-top: 5px">
+                                                    <span style="color: green">
+                                                                <a href="{{ url_for('like', title_id=data[0],title=data[2], page=page) }}">
+                                                                    Like
+                                                                    {% for react in count_reaction %}
+                                                                        {% if react[0] == data[0] %}
+                                                                            {{ react[1] }}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </a>
+                                                    </span>
+                                                    &nbsp;
+                                                    <span style="color: red">
+                                                                <a href="{{ url_for('unlike', title_id=data[0],title=data[2], page=page) }}">
+                                                                    Unlike
+                                                                    {% for react in count_reaction_U %}
+                                                                        {% if react[0] == data[0] %}
+                                                                            {{ react[1] }}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </a>
+                                                    </span>
+                                                </p>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <p style="margin-top: 5px"><span style="font-weight: bold"><a
+                                                    href="{{ url_for('profile', username=data[1]) }}">{{ data[1] }}</a></span>
+                                                <span class="pull-right" style="color: black">
+                                                        <a href="{{ url_for('article',article_title = data[2], title_id=data[0]) }}">
+                                                            Comment
+                                                            {% for count_comments in count_comment %}
+                                                                {% if data[0] == count_comments[0] %}
+                                                                    {{ count_comments[1] }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </a>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-12" style="margin-left: 30px;height: 15px">
+                        {% if count_pages_article %}
+                            {% for count in range(count_pages_article + 1) %}
+                                <a href="{{ url_for('home', page=count) }}">{{ count }}</a>
+                            {% endfor %}
+                        {% elif count_pages_contest %}
+                            {% for count in range(count_pages_contest + 1) %}
+                                <a href="{{ url_for('contest', page=count) }}">{{ count }}</a>
+                            {% endfor %}
+                        {% elif count_pages_problem %}
+                            {% for count in range(count_pages_problem + 1) %}
+                                <a href="{{ url_for('problem', page=count) }}">{{ count }}</a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody style="text-align: center">
+                                <tr>
+                                    <td><a href="{{ url_for('home') }}">Articles</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="{{ url_for('problem') }}">Problem</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="{{ url_for('contest') }}">Contest</a></td>
+                                </tr>
+                                <tr>
+                                    <td>All</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
+                            <b><h3>#Top Ratings</h3></b>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Ratings</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for rating in ratings %}
+                                    <tr>
+                                        <td>{{ rating[1] }}</td>
+                                        <td>{{ rating[2] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
+                            <b><h3>#Top contributors</h3></b>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Contribute</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for cont in count_cont %}
+                                    <tr>
+                                        <td>{{ cont[1] }}</td>
+                                        <td>{{ cont[2] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

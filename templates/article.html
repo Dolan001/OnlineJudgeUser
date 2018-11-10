@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block title %}Article{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'article.css', v=5404327836) }}">
+{% endblock %}
+{% block openAcc %}
+    <li>
+        {% if username %}
+            <div id="proname"><p id="name">{{ username }}</p></div>
+        {% endif %}
+    </li>
+    <li><a href="{{ url_for('addArticle') }}">Add article</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+{% block body %}
+    <div class="container" style="background: #DBE3E6">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="width: 100%">
+                {% for data in data %}
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 vl" style="background: #ffffff; width: 90%; margin-left: 5%; margin-top: 30px; border-radius: 5px" id="main_content">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="article_title">
+                                    <h2 class="article_title"><a
+                                            href="{{ url_for('article', article_title = data[2], title_id=data[0]) }}">{{ data[2] }}</a>
+                                    </h2>
+                                    <h5 class="article_title">By <a
+                                            href="{{ url_for('profile', username=data[1]) }}"><b>{{ data[1] }}</b></a>, {{ data[4] }}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="article_details">
+                                    <div id="article"><h4 id="div_article">{{ data[3] }}</h4></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="background: #EAEAEA" id="article_react_bg">
+                                    <div class="row" id="article_react">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <p style="margin-top: 5px"><span style="color: green">Like 30</span> &nbsp;&nbsp;
+                                                <span
+                                                        style="color: red">Unlike 5</span></p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <p style="margin-top: 5px">
+                                                <span style="font-weight: bold">
+                                                    <a href="{{ url_for('profile', username=data[1]) }}">{{ data[1] }}</a>
+                                                </span>
+                                                &nbsp;
+                                                <span class="pull-right" style="color: black">
+                                                    <a href="{{ url_for('article',article_title = data[2], title_id = data[0]) }}">Delete</a>
+                                                </span>
+                                                <span class="pull-right" style="color: black; margin-right: 10px">
+                                                    <a href="{{ url_for('edit', article_title =data[2], title_id = data[0] ) }}">Edit</a>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 50px">
+                                    <h4><b><span class="pull-left">Comment ({{ comments_count[0] }})</span></b></h4>
+                                    <h4><b><span class="pull-right">{{ data[1] }}</span></b></h4>
+                                </div>
+                            </div>
+                            <hr style="border: 5px inset">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form id="textAreaForm"
+                                          action="{{ url_for('comment', article_title = data[2], title_id=data[0]) }}"
+                                          method="post">
+                                        <textarea class="form-control" name="comment"></textarea>
+                                        <input type="file" class="pull-left" style="margin-top: 10px" name="img">
+                                        <input type="submit" class="btn btn-success pull-right"
+                                               style="margin-top: 10px;" value="Submit">
+                                    </form>
+                                </div>
+                            </div>
+                            {% for comment in comment %}
+                                <div class="row">
+                                    <div class="col-md-12 vl" style="margin-top: 30px; margin-left: 80px;line-height: 2px">
+                                        <label><h4><b>
+                                            <a href="{{ url_for('profile', username=comment[1]) }}">{{ comment[1] }}</a>-</b></h4>
+                                        </label>
+                                        <label>
+                                            <div style="padding-left: 10px"><p>{{ comment[4] }}</p></div>
+                                        </label>
+                                        <p>{{ comment[3] }}</p>
+                                        <label><h6><a href="{{ url_for('edit', title_id = comment[0]) }}">Edit &nbsp;</a></h6></label>
+
+
+                                        <label><h6 onclick="myfunction{{ comment[0] }}()">Reply</h6></label>
+                                        <div id="{{ comment[0] }}" style="display: none; margin-left: 30px">
+                                            <form action="{{ url_for('reply', article_title = comment[2], title_id=comment[0]) }}"
+                                                  method="post">
+                                                <textarea name="reply" class="form-control"></textarea>
+                                                <input type="submit" style="margin-top: 10px"
+                                                       class="btn btn-success pull-right" value="Submit">
+                                            </form>
+                                        </div>
+                                        <div style="margin-left: 60px">
+                                            {% for reply in reply %}
+                                                {% if comment[0] == reply[5] %}
+                                                    <label><h4><b><a
+                                                            href="{{ url_for('profile', username=reply[1]) }}">{{ reply[1] }}</a>
+                                                        - </b></h4></label>
+                                                    <label>
+                                                        <div style="padding-left: 10px"><p>{{ reply[4] }}</p></div>
+                                                    </label>
+                                                    <p>{{ reply[3] }}</p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    function myfunction{{ comment[0] }}() {
+                                        var x = document.getElementById('{{ comment[0] }}');
+                                        if (x.style.display === 'none') {
+                                            x.style.display = 'block';
+                                        } else {
+                                            x.style.display = 'none';
+                                        }
+                                    }
+                                </script>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

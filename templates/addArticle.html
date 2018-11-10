@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Add Article{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'add_article_page.css', v=4574536) }}">
+{% endblock %}
+{% block head %}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({selector: 'textarea'});</script>
+{% endblock %}
+{% block openAcc %}
+    <li>
+        {% if session_user_name %}
+            <div id="proname"><p id="name">{{ session_user_name }}</p></div>
+        {% endif %}
+    </li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+{% block body %}
+    <div class="container article_content">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <form id="form-container" method="post" action="/uploadArticle">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <h3 id="formtitle">Title</h3>
+                            <input type="text" name="title" class="form-control" placeholder="Title">
+                            <h3 id="formtitle">Body</h3>
+                            <textarea class="tinymce" id="textEditor" name="text_editor"></textarea>
+                            <label><h4><a href="{{ url_for('home') }}" style="text-decoration: none">Cancel</a></h4></label>
+                            <input type="submit" class="btn btn-success pull-right article_btn" id="article_btn_upload"
+                                   value="Upload">
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <input type="text" class="form-control" name="Category" style="margin-top: 145px" placeholder="Enter the article category" list="ItemList">
+                            <datalist id="ItemList">
+                                {% for i in Category_article %}
+                                    <option value="{{ i[0] }}"></option>
+                                {% endfor %}
+                            </datalist>
+                            <br>
+                            <p><b>Category will be like this : </b></p>
+                            <ul>
+                                <li>Problems</li>
+                                <li>Contest</li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+#inputTitle{
+
+}
+.article_content{
+    margin-top: 20px;
+    background: #eaeaea;
+    border-radius: 5px;
+}
+#formtitle{
+    font-family: Arial;
+    font-weight: bold;
+}
+#textEditor{
+    width: 100%;
+    height: 250px;
+}
+#form-container{
+    padding: 20px;
+}
+.article_btn{
+    margin: 10px;
+    width: 100px;
+}
+#article_btn_upload{
+
+}
+#proname{
+    background: #eaeaea;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+#name{
+    padding: 5px;
+}

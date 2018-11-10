@@ -1,0 +1,53 @@
+#home_container{
+    background: #DBE3E6;
+}
+#main_content{
+    background: #ffffff;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+#proname{
+    background: #eaeaea;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+#name{
+    padding: 5px;
+}
+#article_details{
+    width: 100%;
+}
+#article{
+    margin: 0px 30px;
+    background: white;
+    overflow: no-display;
+}
+.container{
+    overflow: hidden;
+    max-height:200px;
+    position: relative;
+    border:1px solid #999;
+}
+
+#article.expanded{
+    max-height:none;
+}
+
+.article_title{
+    margin-left: 35px;
+}
+#article_react_bg{
+    width: 100%;
+    margin-bottom: 0px;
+}
+#article_react{
+    background: #EAEAEA;
+}
+.table-responsive{
+    padding: 20px;
+}
+.vl {
+    border-left: 5px solid gray;
+    height: 100%;
+}
