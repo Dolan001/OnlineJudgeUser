@@ -47,13 +47,6 @@
                                                 <span style="font-weight: bold">
                                                     <a href="{{ url_for('profile', username=data[1]) }}">{{ data[1] }}</a>
                                                 </span>
-                                                &nbsp;
-                                                <span class="pull-right" style="color: black">
-                                                    <a href="{{ url_for('article',article_title = data[2], title_id = data[0]) }}">Delete</a>
-                                                </span>
-                                                <span class="pull-right" style="color: black; margin-right: 10px">
-                                                    <a href="{{ url_for('edit', article_title =data[2], title_id = data[0] ) }}">Edit</a>
-                                                </span>
                                             </p>
                                         </div>
                                     </div>
