@@ -31,6 +31,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a type="button" href="{{ url_for('home') }}" class="navbar-brand" id="menu-toggle">Forum</a>
+                    {% block notification %} {% endblock %}
                 </div>
 
                 <div class="collapse navbar-collapse" id="myNavbar">
