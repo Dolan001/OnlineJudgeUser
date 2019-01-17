@@ -231,9 +231,7 @@ def follow(username):
             val_follow = (username, username_session)
             cursor.execute(sql_follow, val_follow)
             con.commit()
-            print("every thing is okey")
-            print(username)
-            print(username_session)
+
             return redirect(url_for('profile', username=username))
         else:
             print("you followed him/her before")
